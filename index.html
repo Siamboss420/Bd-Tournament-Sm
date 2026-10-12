@@ -30,6 +30,32 @@
 </head>
 <body class="min-h-screen flex flex-col relative">
 
+    <!-- Offline Network Alert Banner -->
+    <div id="offlineBanner" class="fixed top-0 inset-x-0 bg-red-600 text-white text-xs font-bold text-center py-1 hidden z-50">
+        ⚠️ ইন্টারনেট সংযোগ বিচ্ছিন্ন হয়েছে! পুনরায় সংযোগের চেষ্টা করা হচ্ছে...
+    </div>
+
+    <!-- Digital In-App Update Modal Popup -->
+    <div id="updateModalPopup" class="fixed inset-0 bg-black/80 hidden z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="card-bg p-6 rounded-2xl w-full max-w-sm text-center space-y-4 custom-popup-anim border border-blue-500/40 shadow-2xl">
+            <div class="w-16 h-16 bg-blue-600/20 text-blue-400 mx-auto rounded-2xl flex items-center justify-center text-3xl rgb-text-glow border border-blue-500/30">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-extrabold rgb-text-glow">BD TOURNAMENT SM</h3>
+                <p class="text-xs text-slate-400 mt-1">নতুন আপডেট ভার্সন উপলব্ধ রয়েছে!</p>
+            </div>
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-left text-xs space-y-1 text-slate-300">
+                <p class="font-bold text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i> নতুন ফিচারসমূহ:</p>
+                <p>• উন্নত সিকিউরিটি ও ফাস্ট পারফরম্যান্স</p>
+                <p>• নতুন স্কোয়াড ও সাপোর্ট সিস্টেম</p>
+            </div>
+            <a id="updateDownloadBtn" href="#" target="_blank" class="block w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 py-3 rounded-xl font-bold text-sm text-white transition shadow-lg shadow-blue-500/20">
+                <i class="fa-solid fa-download mr-2"></i> এখনই আপডেট করুন
+            </a>
+        </div>
+    </div>
+
     <!-- Custom Toast Notification -->
     <div id="appToast" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 hidden custom-popup-anim w-11/12 max-w-md">
         <div class="card-bg border-l-4 border-blue-500 p-4 rounded-xl shadow-2xl flex items-center justify-between backdrop-blur-md bg-slate-900/90">
@@ -118,7 +144,7 @@
         <p>&copy; 2026 BD TOURNAMENT SM. All rights reserved. Powered by SIAM TRADERS.</p>
     </footer>
 
-    <!-- Squad Name Management Modal (Post-Tournament Name Change) -->
+    <!-- Modals (Squad Manage, Support Chat, Join, Auth, Wallet) -->
     <div id="squadManageModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
             <button onclick="closeModal('squadManageModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
@@ -129,16 +155,11 @@
         </div>
     </div>
 
-    <!-- Live Support Chat Modal -->
     <div id="supportModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="card-bg p-6 rounded-2xl w-full max-w-md space-y-4 relative flex flex-col h-[450px]">
             <button onclick="closeModal('supportModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="text-lg font-bold rgb-text-glow text-center border-b border-slate-800 pb-2">Live Support Chat</h3>
-            
-            <div id="chatMessages" class="flex-grow overflow-y-auto space-y-2 p-2 bg-slate-950/50 rounded-xl border border-slate-800 text-xs">
-                <div class="bg-blue-600/20 p-2 rounded-lg text-blue-300">Hello! How can we help you today? Send your message below.</div>
-            </div>
-
+            <div id="chatMessages" class="flex-grow overflow-y-auto space-y-2 p-2 bg-slate-950/50 rounded-xl border border-slate-800 text-xs"></div>
             <div class="flex space-x-2 pt-2">
                 <input type="text" id="chatInput" placeholder="Type your message..." class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-xs focus:outline-none">
                 <button onclick="sendSupportMessage()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-xs">Send</button>
@@ -146,18 +167,16 @@
         </div>
     </div>
 
-    <!-- Tournament Join Modal (Squad & Free Fire UID) -->
     <div id="squadModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
             <button onclick="closeModal('squadModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="text-xl font-bold text-center rgb-text-glow">Match Registration</h3>
-            <input type="text" id="squadInput" placeholder="Squad Name (e.g. TEAM VIPER)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none focus:border-blue-500">
-            <input type="text" id="ffUidInput" placeholder="Free Fire Game UID" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none focus:border-blue-500">
-            <button onclick="confirmSquadJoin()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-sm transition">Confirm Entry</button>
+            <input type="text" id="squadInput" placeholder="Squad Name (e.g. TEAM VIPER)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none">
+            <input type="text" id="ffUidInput" placeholder="Free Fire Game UID" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none">
+            <button onclick="confirmSquadJoin()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-sm">Confirm Entry</button>
         </div>
     </div>
 
-    <!-- Login Modal -->
     <div id="authModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
             <button onclick="closeModal('authModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
@@ -179,7 +198,6 @@
         </div>
     </div>
 
-    <!-- Forgot Password Modal -->
     <div id="forgotModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
             <button onclick="closeModal('forgotModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
@@ -196,7 +214,6 @@
         </div>
     </div>
 
-    <!-- Registration Modal -->
     <div id="registerModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
@@ -214,7 +231,6 @@
         </div>
     </div>
 
-    <!-- Wallet Modal -->
     <div id="walletModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
             <button onclick="closeModal('walletModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
@@ -238,8 +254,33 @@
         </div>
     </div>
 
-    <!-- JavaScript Core Logic -->
+    <!-- JavaScript Core Logic with Crash Resistance -->
     <script>
+        const CURRENT_APP_VERSION = "1.3"; 
+        const UPDATE_DOWNLOAD_URL = "https://bd-tournament-sm-cgfv.vercel.app"; 
+
+        // Network Status Handlers
+        window.addEventListener('online', () => {
+            document.getElementById('offlineBanner').classList.add('hidden');
+            showToast("Online", "Internet connection restored!", "success");
+        });
+        window.addEventListener('offline', () => {
+            document.getElementById('offlineBanner').classList.remove('hidden');
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            try {
+                let savedVersion = localStorage.getItem('sm_app_version');
+                if (!savedVersion) {
+                    localStorage.setItem('sm_app_version', CURRENT_APP_VERSION);
+                } else if (savedVersion !== CURRENT_APP_VERSION) {
+                    let btn = document.getElementById('updateDownloadBtn');
+                    if(btn) btn.href = UPDATE_DOWNLOAD_URL;
+                    document.getElementById('updateModalPopup').classList.remove('hidden');
+                }
+            } catch(e) { console.error("Update check error:", e); }
+        });
+
         function sanitizeInput(str) {
             if (typeof str !== 'string') return '';
             return str.replace(/[&<>"']/g, function(m) {
@@ -257,32 +298,40 @@
         let forgotTargetPhone = null;
         let forgotGeneratedOTP = null;
         let usedTrxIds = [];
-        let loginAttempts = 0;
-        let registeredUsers = JSON.parse(localStorage.getItem('sm_users') || '[]');
+        let registeredUsers = [];
 
-        let tournaments = JSON.parse(localStorage.getItem('sm_tournaments') || JSON.stringify([
-            { id: 1, title: "CS 4v4 Full Map Clash", type: "CS", prize: "500 BDT", entryFee: 50, date: "2026-10-15", time: "08:30 PM", participants: [] },
-            { id: 2, title: "BR Solo Booyah Contest", type: "BR", prize: "300 BDT", entryFee: 30, date: "2026-10-15", time: "09:15 PM", participants: [] },
-            { id: 3, title: "Lone Wolf 1v1 Ultimate", type: "LONE", prize: "200 BDT", entryFee: 20, date: "2026-10-16", time: "10:00 PM", participants: [] }
-        ]));
+        try { registeredUsers = JSON.parse(localStorage.getItem('sm_users') || '[]'); } catch(e) { registeredUsers = []; }
+
+        let tournaments = [];
+        try {
+            tournaments = JSON.parse(localStorage.getItem('sm_tournaments') || JSON.stringify([
+                { id: 1, title: "CS 4v4 Full Map Clash", type: "CS", prize: "500 BDT", entryFee: 50, date: "2026-10-15", time: "08:30 PM", participants: [] },
+                { id: 2, title: "BR Solo Booyah Contest", type: "BR", prize: "300 BDT", entryFee: 30, date: "2026-10-15", time: "09:15 PM", participants: [] },
+                { id: 3, title: "Lone Wolf 1v1 Ultimate", type: "LONE", prize: "200 BDT", entryFee: 20, date: "2026-10-16", time: "10:00 PM", participants: [] }
+            ]));
+        } catch(e) { tournaments = []; }
 
         window.onload = function() {
-            if(currentUser) {
-                document.getElementById('authBtn').innerText = currentUser;
-                document.getElementById('navWallet').innerText = "৳" + userBalance;
-                document.getElementById('modalBalance').innerText = "৳" + userBalance;
-            }
-            loadWinnerBanner();
-            renderTournaments();
-            loadUserChats();
+            try {
+                if(currentUser) {
+                    document.getElementById('authBtn').innerText = currentUser;
+                    document.getElementById('navWallet').innerText = "৳" + userBalance;
+                    document.getElementById('modalBalance').innerText = "৳" + userBalance;
+                }
+                loadWinnerBanner();
+                renderTournaments();
+                loadUserChats();
+            } catch(e) { console.error("Init error:", e); }
         };
 
         function loadWinnerBanner() {
-            let winnerInfo = JSON.parse(localStorage.getItem('sm_latest_winner') || 'null');
-            if(winnerInfo) {
-                document.getElementById('winnerTeamName').innerText = winnerInfo.squad;
-                document.getElementById('winnerDisplayBanner').innerHTML = `Congratulations to <b class="text-yellow-400 font-bold">${sanitizeInput(winnerInfo.squad)}</b> for winning the ${sanitizeInput(winnerInfo.matchTitle)}! 🔥`;
-            }
+            try {
+                let winnerInfo = JSON.parse(localStorage.getItem('sm_latest_winner') || 'null');
+                if(winnerInfo) {
+                    document.getElementById('winnerTeamName').innerText = winnerInfo.squad;
+                    document.getElementById('winnerDisplayBanner').innerHTML = `Congratulations to <b class="text-yellow-400 font-bold">${sanitizeInput(winnerInfo.squad)}</b> for winning the ${sanitizeInput(winnerInfo.matchTitle)}! 🔥`;
+                }
+            } catch(e) {}
         }
 
         function togglePassword(fieldId, iconId) {
