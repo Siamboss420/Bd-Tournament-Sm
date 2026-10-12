@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
     <title>BD TOURNAMENT SM - Secure Esports Platform</title>
+    <!-- PWA Manifest & App Info -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22BD%20TOURNAMENT%20SM%22%2C%22short_name%22%3A%22BD%20Tournament%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0f19%22%2C%22theme_color%22%3A%22%233b82f6%22%7D">
+    <meta name="theme-color" content="#3b82f6">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -144,7 +147,7 @@
         <p>&copy; 2026 BD TOURNAMENT SM. All rights reserved. Powered by SIAM TRADERS.</p>
     </footer>
 
-    <!-- Modals (Squad Manage, Support Chat, Join, Auth, Wallet) -->
+    <!-- Modals -->
     <div id="squadManageModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
         <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
             <button onclick="closeModal('squadManageModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
@@ -254,12 +257,11 @@
         </div>
     </div>
 
-    <!-- JavaScript Core Logic with Crash Resistance -->
+    <!-- JavaScript Core Logic -->
     <script>
         const CURRENT_APP_VERSION = "1.3"; 
         const UPDATE_DOWNLOAD_URL = "https://bd-tournament-sm-cgfv.vercel.app"; 
 
-        // Network Status Handlers
         window.addEventListener('online', () => {
             document.getElementById('offlineBanner').classList.add('hidden');
             showToast("Online", "Internet connection restored!", "success");
