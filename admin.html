@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BD TOURNAMENT SM - Master Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
+        .card-bg { background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%); border: 1px solid rgba(59, 130, 246, 0.2); }
+    </style>
+</head>
+<body class="min-h-screen p-4 flex justify-center items-center">
+
+    <div id="adminLoginBox" class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4">
+        <h3 class="text-xl font-bold text-center text-blue-400"><i class="fa-solid fa-user-shield mr-2"></i>Admin Master Portal</h3>
+        <input type="text" id="adminUser" placeholder="Admin Username" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
+        <input type="password" id="adminPass" placeholder="Admin Password" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
+        <button onclick="loginAdmin()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm">Login Dashboard</button>
+    </div>
+
+    <div id="adminDashboard" class="hidden w-full max-w-4xl space-y-6">
+        <div class="flex justify-between items-center bg-slate-900 p-4 rounded-xl border border-slate-800">
+            <h2 class="text-lg font-bold text-blue-400">SIAM TRADERS - Master Control Panel</h2>
+            <button onclick="location.reload()" class="bg-red-600 px-3 py-1.5 rounded text-xs font-bold text-white">Logout</button>
+        </div>
+
+        <div class="card-bg p-5 rounded-xl space-y-3">
+            <h3 class="font-bold text-sm text-emerald-400">Publish New Match</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <input type="text" id="mTitle" placeholder="Match Title" class="bg-slate-800 p-3 rounded text-sm border border-slate-700">
+                <input type="text" id="mType" placeholder="Type (CS / BR / LONE)" class="bg-slate-800 p-3 rounded text-sm border border-slate-700">
+                <input type="text" id="mPrize" placeholder="Prize Pool" class="bg-slate-800 p-3 rounded text-sm border border-slate-700">
+                <input type="number" id="mEntry" placeholder="Entry Fee Number" class="bg-slate-800 p-3 rounded text-sm border border-slate-700">
+            </div>
+            <button onclick="addNewMatch()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm mt-2">Publish Match</button>
+        </div>
+
+        <div class="card-bg p-5 rounded-xl space-y-3">
+            <h3 class="font-bold text-sm text-blue-400"><i class="fa-solid fa-headset mr-1"></i> Live Support Chat Box</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div id="userChatList" class="bg-slate-900 p-3 rounded-xl border border-slate-700 space-y-2 max-h-60 overflow-y-auto"></div>
+                <div class="md:col-span-2 bg-slate-900 p-3 rounded-xl border border-slate-700 flex flex-col h-60">
+                    <div id="adminChatMessages" class="flex-grow overflow-y-auto space-y-2 text-xs p-2">Select a user to chat.</div>
+                    <div class="flex space-x-2 pt-2 border-t border-slate-800">
+                        <input type="text" id="adminChatInput" placeholder="Type reply..." class="w-full bg-slate-800 p-2 text-xs rounded">
+                        <button onclick="sendAdminReply()" class="bg-blue-600 px-4 py-2 rounded text-xs font-bold">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-bg p-5 rounded-xl space-y-3">
+            <h3 class="font-bold text-sm text-yellow-400">Manage Matches & Announce Winners</h3>
+            <div id="matchList" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <script>
+        let selectedUserPhone = null;
+
+        function loginAdmin() {
+            let u = document.getElementById('adminUser').value.trim();
+            let p = document.getElementById('adminPass').value.trim();
+            if(u === "SIAM TRADERS" && p === "SIAM MEGHLA") {
+                document.getElementById('adminLoginBox').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                loadMatches();
+                loadAdminChatUsers();
+            } else { alert("Invalid Credentials!"); }
+        }
+
+        function loadAdminChatUsers() {
+            let list = document.getElementById('userChatList');
+            let chats = JSON.parse(localStorage.getItem('sm_support_chats') || '[]');
+            list.innerHTML = "";
+            let uniqueUsers = {};
+            chats.forEach(c => { uniqueUsers[c.phone] = c; });
+
+            Object.values(uniqueUsers).forEach(u => {
+                list.innerHTML += `
+                    <div onclick="selectChatUser('${u.phone}', '${u.name}')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">
+                        <p class="text-xs font-bold text-white">${u.name}</p>
+                        <p class="text-[10px] text-slate-400">UID: ${u.uid}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function selectChatUser(phone, name) {
+            selectedUserPhone = phone;
+            let chatMsgBox = document.getElementById('adminChatMessages');
+            let chats = JSON.parse(localStorage.getItem('sm_support_chats') || '[]');
+            chatMsgBox.innerHTML = `<p class="text-emerald-400 text-xs font-bold mb-2">Chat with ${name}:</p>`;
+            let userChats = chats.filter(c => c.phone === phone);
+            userChats.forEach(c => {
+                let bg = c.sender === 'admin' ? 'bg-blue-600/30 text-right text-blue-200' : 'bg-slate-800 text-slate-200';
+                chatMsgBox.innerHTML += `<div class="${bg} p-2 rounded text-xs">${c.sender === 'admin' ? 'You' : name}: ${c.message}</div>`;
+            });
+        }
+
+        function sendAdminReply() {
+            let msg = document.getElementById('adminChatInput').value.trim();
+            if(!msg || !selectedUserPhone) { alert("Select user and type message!"); return; }
+            let chats = JSON.parse(localStorage.getItem('sm_support_chats') || '[]');
+            chats.push({ phone: selectedUserPhone, sender: 'admin', message: msg, time: new Date().toLocaleTimeString() });
+            localStorage.setItem('sm_support_chats', JSON.stringify(chats));
+            document.getElementById('adminChatInput').value = "";
+            selectChatUser(selectedUserPhone, "User");
+        }
+
+        function loadMatches() {
+            let list = document.getElementById('matchList');
+            let tournaments = JSON.parse(localStorage.getItem('sm_tournaments') || '[]');
+            list.innerHTML = "";
+            tournaments.forEach((t) => {
+                let participantsList = "";
+                if(t.participants && t.participants.length > 0) {
+                    t.participants.forEach(p => {
+                        participantsList += `<span class="bg-blue-600/30 text-blue-300 text-[10px] px-2 py-1 rounded mr-1">👥 Squad: ${p.squad} | FF UID: ${p.ffUid} (${p.user} - ${p.uid})</span><br>`;
+                    });
+                } else { participantsList = `<span class="text-[10px] text-slate-500">No participants yet</span>`; }
+
+                list.innerHTML += `
+                    <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-3">
+                        <p class="text-sm font-bold text-white">${t.title} (${t.type}) - Prize: ${t.prize}</p>
+                        <div class="text-xs bg-slate-900 p-2 rounded">${participantsList}</div>
+                        <div class="flex space-x-2">
+                            <input type="text" id="winnerInput_${t.id}" placeholder="Winner Squad Name" class="bg-slate-900 border border-slate-600 p-2 text-xs rounded w-full">
+                            <button onclick="declareWinner('${t.title}', ${t.id})" class="bg-yellow-500 hover:bg-yellow-600 text-black px-3 py-1 rounded text-xs font-bold whitespace-nowrap">Announce Winner</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function addNewMatch() {
+            let title = document.getElementById('mTitle').value.trim();
+            let type = document.getElementById('mType').value.trim();
+            let prize = document.getElementById('mPrize').value.trim() || "100 BDT";
+            let entryFee = Number(document.getElementById('mEntry').value) || 10;
+            if(!title || !type) { alert("Fill all fields!"); return; }
+            let tournaments = JSON.parse(localStorage.getItem('sm_tournaments') || '[]');
+            tournaments.push({ id: Date.now(), title, type, prize, entryFee, participants: [] });
+            localStorage.setItem('sm_tournaments', JSON.stringify(tournaments));
+            loadMatches();
+            alert("Match published successfully!");
+        }
+
+        function declareWinner(matchTitle, matchId) {
+            let winnerSquad = document.getElementById(`winnerInput_${matchId}`).value.trim();
+            if(!winnerSquad) { alert("Enter winner squad name!"); return; }
+            localStorage.setItem('sm_latest_winner', JSON.stringify({ squad: winnerSquad, matchTitle }));
+            alert(`Winner "${winnerSquad}" announced successfully!`);
+        }
+    </script>
+</body>
+</html>
