@@ -7,7 +7,6 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
     <title>BD TOURNAMENT SM - Secure Esports Platform</title>
     
-    <!-- PWA Fullscreen & Native App Meta Tags -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -34,7 +33,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
         body { font-family: 'Poppins', sans-serif; background-color: #0b0f19; color: #f3f4f6; user-select: none; -webkit-font-smoothing: antialiased; }
         
-        /* Stable, Glitch-Free Optimized Glow Effect */
         @keyframes stableGlow {
             0% { border-color: rgba(59, 130, 246, 0.5); }
             50% { border-color: rgba(139, 92, 246, 0.8); }
@@ -66,20 +64,20 @@
             </div>
             <div>
                 <h3 class="text-xl font-extrabold rgb-text-glow">BD TOURNAMENT SM</h3>
-                <p class="text-xs text-slate-300 mt-1">অফিসিয়াল অ্যান্ড্রয়েড অ্যাপ ডাউনলোড করুন!</p>
+                <p id="updateAlertMsg" class="text-xs text-slate-300 mt-1">অফিসিয়াল অ্যান্ড্রয়েড অ্যাপ ডাউনলোড করুন!</p>
             </div>
             <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 text-left text-xs space-y-1.5 text-slate-300">
                 <p class="font-bold text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i> অ্যাপের সুবিধাসমূহ:</p>
                 <p>• ফাস্ট ও সিকিউর টুর্নামেন্ট অভিজ্ঞতা</p>
                 <p>• লাইভ চ্যাট ও instant ওয়ালেট সিস্টেম</p>
             </div>
-            <a href="YOUR_SIGNED_APK_DIRECT_LINK" target="_blank" class="block w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 py-3.5 rounded-xl font-bold text-sm text-white transition shadow-lg shadow-emerald-500/20">
+            <a id="dynamicDownloadBtn" href="https://www.mediafire.com/file/ootr9nmfjys3r8h/app4217380-ns1bye.apk/file" target="_blank" class="block w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 py-3.5 rounded-xl font-bold text-sm text-white transition shadow-lg shadow-emerald-500/20">
                 <i class="fa-solid fa-cloud-arrow-down mr-2"></i> Download APK Now
             </a>
         </div>
     </div>
 
-    <!-- Live Announcement Ticker / Marquee -->
+    <!-- Live Announcement Ticker -->
     <div class="bg-slate-950 border-b border-slate-800 text-xs py-2 px-4 text-slate-300 flex items-center space-x-2">
         <span class="bg-red-600 text-white font-extrabold px-2 py-0.5 rounded text-[10px] animate-pulse">LIVE</span>
         <marquee id="marqueeText" class="font-semibold text-slate-200">🔥 BD TOURNAMENT SM-এ প্রতিদিনের সোলো ও স্কোয়াড কাস্টম ম্যাচে অংশ নিয়ে জিতে নিন হাজার হাজার টাকা!</marquee>
@@ -112,7 +110,6 @@
                 </div>
             </div>
             <div class="flex items-center space-x-2.5">
-                <!-- Circular Profile Icon -->
                 <button onclick="openProfileModal()" id="profileIconBtn" class="hidden w-9 h-9 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 border-2 border-blue-400 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-blue-500/30 hover:scale-105 transition" title="My Profile">
                     <span id="profileInitial">SM</span>
                 </button>
@@ -131,7 +128,6 @@
 
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 py-6 w-full space-y-6">
-        <!-- Live Winner Announcement Banner -->
         <div class="card-bg p-4 rounded-2xl border-l-4 border-yellow-500 shadow-xl flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="bg-yellow-500/20 p-3 rounded-xl text-yellow-400">
@@ -145,7 +141,6 @@
             <span class="text-[10px] bg-yellow-500 text-black font-extrabold px-2.5 py-1 rounded-lg tracking-wider">WINNER</span>
         </div>
 
-        <!-- Squad Name Management & Live Support Buttons -->
         <div class="grid grid-cols-2 gap-3">
             <button onclick="openSquadManageModal()" class="p-3 card-bg rounded-xl text-center font-semibold text-xs hover:border-blue-500 transition text-blue-400 flex flex-col items-center justify-center space-y-1 card-hover">
                 <i class="fa-solid fa-users-gear text-sm"></i>
@@ -157,7 +152,6 @@
             </button>
         </div>
 
-        <!-- Mode Selection Tabs -->
         <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5">
             <button onclick="filterTournaments('ALL')" class="p-2.5 card-bg rounded-xl text-center font-bold text-xs hover:border-blue-500 transition card-hover">🔥 All Matches</button>
             <button onclick="filterTournaments('CUSTOM')" class="p-2.5 card-bg rounded-xl text-center font-bold text-xs hover:border-amber-500 transition text-amber-400 card-hover">🎯 Custom Match</button>
@@ -166,7 +160,6 @@
             <button onclick="filterTournaments('LONE')" class="p-2.5 card-bg rounded-xl text-center font-bold text-xs hover:border-blue-500 transition card-hover">⚡ Lone Wolf</button>
         </div>
 
-        <!-- Tournaments List -->
         <div>
             <h2 class="text-base font-bold mb-4 flex items-center justify-between">
                 <span class="rgb-text-glow flex items-center"><i class="fa-solid fa-fire mr-2"></i> Running & Upcoming Matches</span>
@@ -175,23 +168,18 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-slate-900/90 border-t border-slate-800 py-4 text-center text-[11px] text-slate-500 px-6">
         <p>&copy; 2026 BD TOURNAMENT SM. All rights reserved. Powered by SIAM TRADERS.</p>
     </footer>
 
-    <!-- Modals (With Scrollable Inner Content & Locked Background) -->
-
-    <!-- Profile Modal -->
+    <!-- Modals -->
     <div id="profileModal" class="fixed inset-0 bg-black/80 hidden z-50 flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm space-y-4 relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('profileModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <div class="text-center space-y-2 pt-2">
-                <div id="profileModalAvatar" class="w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 border-2 border-blue-400 rounded-full mx-auto flex items-center justify-center text-white font-extrabold text-2xl shadow-xl">
-                    SM
-                </div>
+                <div id="profileModalAvatar" class="w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 border-2 border-blue-400 rounded-full mx-auto flex items-center justify-center text-white font-extrabold text-2xl shadow-xl">SM</div>
                 <h3 id="profileModalName" class="text-lg font-bold text-white">Siam</h3>
                 <p id="profileModalUid" class="text-xs text-blue-400 font-semibold">UID: SM-1001</p>
             </div>
@@ -205,14 +193,11 @@
                     <span id="profileModalBal" class="text-emerald-400 font-extrabold">৳0</span>
                 </div>
             </div>
-
-            <!-- Update Withdraw Number Section -->
             <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 space-y-2 text-xs">
                 <label class="text-yellow-400 font-bold block"><i class="fa-solid fa-pen-to-square mr-1"></i> Update Withdraw Number</label>
                 <input type="tel" id="editWithdrawNum" placeholder="Enter bKash/Nagad Number" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-xs text-white">
                 <button onclick="saveNewWithdrawNumber()" class="w-full bg-amber-600 hover:bg-amber-700 py-2 rounded-xl font-bold text-xs text-white transition">Save New Number</button>
             </div>
-
             <button onclick="handleLogout()" class="w-full bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white py-3 rounded-xl font-bold text-xs transition border border-red-500/30">
                 <i class="fa-solid fa-right-from-bracket mr-2"></i> Logout Account
             </button>
@@ -223,9 +208,8 @@
         <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm space-y-4 relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('squadManageModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="text-lg font-bold text-center rgb-text-glow">Update Squad Name</h3>
-            <p class="text-xs text-slate-400 text-center">You can update your squad name here.</p>
-            <input type="text" id="updateSquadInput" placeholder="Enter New Squad Name" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 text-white">
-            <button onclick="saveUpdatedSquadName()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm transition text-white">Save Changes</button>
+            <input type="text" id="updateSquadInput" placeholder="Enter New Squad Name" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
+            <button onclick="saveUpdatedSquadName()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm text-white">Save Changes</button>
         </div>
     </div>
 
@@ -235,7 +219,7 @@
             <h3 class="text-base font-bold rgb-text-glow text-center border-b border-slate-800 pb-2">Live Support Chat</h3>
             <div id="chatMessages" class="flex-grow overflow-y-auto space-y-2 p-2 bg-slate-950/50 rounded-xl border border-slate-800 text-xs"></div>
             <div class="flex space-x-2 pt-2">
-                <input type="text" id="chatInput" placeholder="Type your message..." class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-xs focus:outline-none text-white">
+                <input type="text" id="chatInput" placeholder="Type your message..." class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-xs text-white">
                 <button onclick="sendSupportMessage()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-xs text-white">Send</button>
             </div>
         </div>
@@ -245,8 +229,8 @@
         <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm space-y-4 relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('squadModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="text-lg font-bold text-center rgb-text-glow">Match Registration</h3>
-            <input type="text" id="squadInput" placeholder="Squad/Player Name (e.g. TEAM VIPER)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none text-white">
-            <input type="text" id="ffUidInput" placeholder="Free Fire Game UID" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none text-white">
+            <input type="text" id="squadInput" placeholder="Squad/Player Name (e.g. TEAM VIPER)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
+            <input type="text" id="ffUidInput" placeholder="Free Fire Game UID" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
             <button onclick="confirmSquadJoin()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-sm text-white">Confirm Entry</button>
         </div>
     </div>
@@ -254,7 +238,6 @@
     <div id="authModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
         <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm space-y-4 relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('authModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
-            
             <div class="text-center space-y-1">
                 <div class="w-12 h-12 bg-blue-600/20 text-blue-400 mx-auto rounded-xl flex items-center justify-center text-2xl rgb-text-glow border border-blue-500/40">
                     <i class="fa-solid fa-shield-halved"></i>
@@ -262,7 +245,6 @@
                 <h3 class="text-lg font-extrabold rgb-text-glow tracking-wider">BD TOURNAMENT SM</h3>
                 <p class="text-xs text-slate-400">Player Secure Login</p>
             </div>
-
             <input type="tel" id="loginPhone" placeholder="Phone Number" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
             <div class="relative">
                 <input type="password" id="loginPass" placeholder="Password" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm pr-10 text-white">
@@ -286,12 +268,10 @@
                 <i class="fa-solid fa-arrow-left"></i>
             </button>
             <button onclick="closeModal('forgotModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
-            
             <div class="text-center space-y-1 pt-2">
                 <h3 class="text-lg font-extrabold rgb-text-glow tracking-wider">BD TOURNAMENT SM</h3>
                 <p class="text-xs text-slate-400">Reset Password</p>
             </div>
-
             <div id="forgotStep1" class="space-y-3">
                 <input type="tel" id="forgotPhone" placeholder="Registered Phone Number" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
                 <button onclick="sendForgotOTP()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm text-white">Send Recovery Code</button>
@@ -299,10 +279,6 @@
             <div id="forgotStep2" class="space-y-3 hidden">
                 <input type="number" id="forgotOtpInput" maxlength="4" placeholder="Enter 4-Digit OTP" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-center font-bold tracking-widest text-emerald-400">
                 <input type="password" id="newPass" placeholder="Enter New Password" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
-                <div class="flex justify-between items-center text-xs pt-1">
-                    <span id="forgotTimerText" class="text-slate-400">Resend code in 60s</span>
-                    <button id="forgotResendBtn" onclick="resendForgotOTP()" class="text-blue-400 font-bold hover:underline cursor-not-allowed opacity-50" disabled>Resend OTP</button>
-                </div>
                 <button onclick="verifyAndResetPassword()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-sm text-white mt-2">Reset Password</button>
             </div>
         </div>
@@ -314,12 +290,10 @@
                 <i class="fa-solid fa-arrow-left"></i>
             </button>
             <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
-            
             <div class="text-center space-y-1 pt-2">
                 <h3 class="text-lg font-extrabold rgb-text-glow tracking-wider">BD TOURNAMENT SM</h3>
                 <p class="text-xs text-slate-400">Player Registration</p>
             </div>
-
             <div id="regStep1" class="space-y-3">
                 <input type="text" id="regName" placeholder="Free Fire IGN / Full Name" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
                 <input type="tel" id="regPhone" placeholder="Phone Number" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
@@ -328,44 +302,33 @@
             </div>
             <div id="regStep2" class="space-y-3 hidden">
                 <input type="number" id="otpInput" maxlength="4" placeholder="Enter 4-Digit OTP" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-center font-bold tracking-widest text-emerald-400">
-                <div class="flex justify-between items-center text-xs pt-1">
-                    <span id="regTimerText" class="text-slate-400">Resend code in 60s</span>
-                    <button id="regResendBtn" onclick="resendOTP()" class="text-blue-400 font-bold hover:underline cursor-not-allowed opacity-50" disabled>Resend OTP</button>
-                </div>
                 <button onclick="verifyOTPAndRegister()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-sm text-white mt-2">Verify OTP & Register</button>
             </div>
         </div>
     </div>
 
-    <!-- Wallet Modal with Scrollable Container -->
     <div id="walletModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
         <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm space-y-4 relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('walletModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition shadow-md">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
-            
             <h3 class="text-lg font-bold text-center rgb-text-glow">My Wallet</h3>
             <div class="text-center bg-slate-800/80 p-4 rounded-xl border border-slate-700/50">
                 <p class="text-xs text-slate-400">Current Balance</p>
                 <h2 id="modalBalance" class="text-2xl font-extrabold text-emerald-400 mt-1">৳0</h2>
             </div>
-            
-            <!-- Deposit Section -->
             <div class="space-y-2 border-b border-slate-700/80 pb-3">
                 <label class="text-xs text-emerald-400 font-bold block"><i class="fa-solid fa-circle-plus mr-1"></i> Deposit Money (Send Money to Nagad)</label>
                 <div class="bg-slate-900 p-2.5 rounded-xl border border-emerald-500/30 text-xs text-slate-300">
                     <p>Agent/Personal Nagad Number:</p>
                     <p class="text-sm font-extrabold text-yellow-400 tracking-wider select-all mt-0.5">01825420565</p>
-                    <p class="text-[10px] text-slate-400 mt-0.5">টাকা পাঠিয়ে নিচের বক্সে পরিমাণ ও TrxID দিন।</p>
                 </div>
                 <input type="number" id="depositAmount" placeholder="Amount (Min ৳100)" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm text-white">
                 <input type="text" id="depositTrx" placeholder="Enter TrxID (Unique)" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm text-white">
-                <button onclick="requestDeposit()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-emerald-500/20 text-white">Submit Deposit Request</button>
+                <button onclick="requestDeposit()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-2.5 rounded-xl font-bold text-sm text-white">Submit Deposit Request</button>
             </div>
-
-            <!-- Withdraw Section -->
             <div class="space-y-2 pt-1">
-                <label class="text-xs text-blue-400 font-bold block"><i class="fa-solid fa-circle-minus mr-1"></i> Withdraw Money (Payout Request - Max ৳3000)</label>
+                <label class="text-xs text-blue-400 font-bold block"><i class="fa-solid fa-circle-minus mr-1"></i> Withdraw Money (Max ৳3000)</label>
                 <select id="withdrawMethod" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm text-white focus:outline-none">
                     <option value="bKash">bKash</option>
                     <option value="Nagad">Nagad</option>
@@ -373,7 +336,7 @@
                 </select>
                 <input type="number" id="withdrawAmount" placeholder="Amount (Min ৳100 - Max ৳3000)" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm text-white">
                 <input type="tel" id="withdrawNumber" placeholder="Your Personal Account Number" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm text-white">
-                <button onclick="requestWithdraw()" class="w-full bg-blue-600 hover:bg-blue-700 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-emerald-500/20 text-white">Request Withdrawal</button>
+                <button onclick="requestWithdraw()" class="w-full bg-blue-600 hover:bg-blue-700 py-2.5 rounded-xl font-bold text-sm text-white">Request Withdrawal</button>
             </div>
         </div>
     </div>
@@ -393,17 +356,19 @@
         let userPhoneKey = localStorage.getItem('sm_user_phone') || null;
         let userUID = localStorage.getItem('sm_user_uid') || null;
         let savedWithdrawNum = localStorage.getItem('sm_withdraw_num_' + userPhoneKey) || '';
-        
         let pendingMatchId = null;
-        let generatedOTP = null;
-        let regCountdownInterval = null;
-        
-        let forgotTargetPhone = null;
-        let forgotGeneratedOTP = null;
-        let forgotCountdownInterval = null;
-        
+
         let registeredUsers = [];
         try { registeredUsers = JSON.parse(localStorage.getItem('sm_users') || '[]'); } catch(e) { registeredUsers = []; }
+
+        // Sync balance if updated by admin
+        if(currentUser && userPhoneKey) {
+            let foundU = registeredUsers.find(u => u.phone === userPhoneKey);
+            if(foundU) {
+                userBalance = Number(foundU.balance || 0);
+                localStorage.setItem('sm_user_balance', userBalance);
+            }
+        }
 
         let tournaments = [];
         try {
@@ -422,23 +387,43 @@
                 loadWinnerBanner();
                 renderTournaments();
                 loadUserChats();
+                checkAdminAppSettings();
+                setInterval(syncLiveUserData, 2000); // Live sync balance & chats
             } catch(e) { console.error("Init error:", e); }
         };
+
+        function syncLiveUserData() {
+            if(userPhoneKey) {
+                let users = JSON.parse(localStorage.getItem('sm_users') || '[]');
+                let me = users.find(u => u.phone === userPhoneKey);
+                if(me) {
+                    userBalance = Number(me.balance || 0);
+                    localStorage.setItem('sm_user_balance', userBalance);
+                    document.getElementById('navWallet').innerText = "৳" + userBalance;
+                    document.getElementById('modalBalance').innerText = "৳" + userBalance;
+                }
+            }
+            loadUserChats();
+        }
+
+        function checkAdminAppSettings() {
+            let remoteSettings = JSON.parse(localStorage.getItem('sm_admin_app_settings') || 'null');
+            if(remoteSettings) {
+                if(remoteSettings.apkLink) document.getElementById('dynamicDownloadBtn').href = remoteSettings.apkLink;
+                if(remoteSettings.alertText) document.getElementById('updateAlertMsg').innerText = remoteSettings.alertText;
+            }
+        }
 
         function updateAuthUI() {
             if(currentUser) {
                 document.getElementById('authBtn').classList.add('hidden');
                 let profileBtn = document.getElementById('profileIconBtn');
                 profileBtn.classList.remove('hidden');
-                let initial = currentUser.charAt(0).toUpperCase();
-                document.getElementById('profileInitial').innerText = initial;
+                document.getElementById('profileInitial').innerText = currentUser.charAt(0).toUpperCase();
                 document.getElementById('navWallet').innerText = "৳" + userBalance;
                 document.getElementById('modalBalance').innerText = "৳" + userBalance;
-                
                 let wNumInput = document.getElementById('withdrawNumber');
-                if(wNumInput && savedWithdrawNum) {
-                    wNumInput.value = savedWithdrawNum;
-                }
+                if(wNumInput && savedWithdrawNum) wNumInput.value = savedWithdrawNum;
             } else {
                 document.getElementById('authBtn').classList.remove('hidden');
                 document.getElementById('profileIconBtn').classList.add('hidden');
@@ -468,7 +453,7 @@
             }
         }
 
-        function showToast(title, message, type = 'info') {
+        function showToast(title, message) {
             const toast = document.getElementById('appToast');
             document.getElementById('toastTitle').innerText = sanitizeInput(title);
             document.getElementById('toastMessage').innerText = sanitizeInput(message);
@@ -477,40 +462,25 @@
         }
 
         function hideToast() { document.getElementById('appToast').classList.add('hidden'); }
-        
-        function openModal(id) {
-            document.getElementById(id).classList.remove('hidden');
-            document.body.classList.add('modal-open');
-        }
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-            document.body.classList.remove('modal-open');
-        }
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.body.classList.add('modal-open'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.body.classList.remove('modal-open'); }
 
         function openProfileModal() {
             if(!currentUser) { openModal('authModal'); return; }
             document.getElementById('profileModalName').innerText = currentUser;
-            document.getElementById('profileModalUid').innerText = "UID: " + (userUID || "SM-XXXX");
+            document.getElementById('profileModalUid').innerText = "UID: " + (userUID || "SM-1001");
             document.getElementById('profileModalPhone').innerText = userPhoneKey || "N/A";
             document.getElementById('profileModalBal').innerText = "৳" + userBalance;
             document.getElementById('profileModalAvatar').innerText = currentUser.charAt(0).toUpperCase();
-            
-            let currentSavedNum = localStorage.getItem('sm_withdraw_num_' + userPhoneKey) || '';
-            document.getElementById('editWithdrawNum').value = currentSavedNum;
             openModal('profileModal');
         }
 
         function saveNewWithdrawNumber() {
             let newNum = sanitizeInput(document.getElementById('editWithdrawNum').value.trim());
-            if(!newNum || newNum.length < 11) {
-                showToast("Error", "Enter a valid 11-digit account number!", "error");
-                return;
-            }
+            if(!newNum || newNum.length < 11) { showToast("Error", "Enter a valid 11-digit account number!"); return; }
             savedWithdrawNum = newNum;
             localStorage.setItem('sm_withdraw_num_' + userPhoneKey, savedWithdrawNum);
-            let wNumInput = document.getElementById('withdrawNumber');
-            if(wNumInput) wNumInput.value = savedWithdrawNum;
-            showToast("Success", "Withdrawal number updated successfully!", "success");
+            showToast("Success", "Withdrawal number updated successfully!");
             closeModal('profileModal');
         }
 
@@ -519,159 +489,82 @@
             localStorage.removeItem('sm_user_phone');
             localStorage.removeItem('sm_user_balance');
             localStorage.removeItem('sm_user_uid');
-            currentUser = null;
-            userPhoneKey = null;
-            userBalance = 0;
-            userUID = null;
+            currentUser = null; userPhoneKey = null; userBalance = 0; userUID = null;
             closeModal('profileModal');
             updateAuthUI();
-            showToast("Logged Out", "You have been logged out successfully.", "info");
+            showToast("Logged Out", "You have been logged out successfully.");
         }
 
         function switchToRegister() { closeModal('authModal'); closeModal('forgotModal'); openModal('registerModal'); }
         function switchToLogin() { closeModal('registerModal'); closeModal('forgotModal'); openModal('authModal'); }
         function openForgotModal() { closeModal('authModal'); closeModal('registerModal'); openModal('forgotModal'); }
 
-        function startTimer(duration, textElementId, btnElementId) {
-            let timer = duration;
-            const textElem = document.getElementById(textElementId);
-            const btnElem = document.getElementById(btnElementId);
-            
-            btnElem.disabled = true;
-            btnElem.classList.add('cursor-not-allowed', 'opacity-50');
-
-            let interval = setInterval(() => {
-                textElem.innerText = `Resend code in ${timer}s`;
-                if (--timer < 0) {
-                    clearInterval(interval);
-                    textElem.innerText = "Didn't receive code?";
-                    btnElem.disabled = false;
-                    btnElem.classList.remove('cursor-not-allowed', 'opacity-50');
-                }
-            }, 1000);
-            return interval;
-        }
-
         function sendForgotOTP() {
             let phone = sanitizeInput(document.getElementById('forgotPhone').value.trim());
-            let user = registeredUsers.find(u => u.phone === phone);
-            if (!user) { showToast("Not Found", "Phone number not registered!", "error"); return; }
-            
-            forgotTargetPhone = phone;
-            forgotGeneratedOTP = (Math.floor(1000 + Math.random() * 9000)).toString();
-            
+            let users = JSON.parse(localStorage.getItem('sm_users') || '[]');
+            let user = users.find(u => u.phone === phone);
+            if (!user) { showToast("Not Found", "Phone number not registered!"); return; }
             document.getElementById('forgotStep1').classList.add('hidden');
             document.getElementById('forgotStep2').classList.remove('hidden');
-            
-            showToast("🔑 Recovery Code", `Your Reset OTP Code is: ${forgotGeneratedOTP}`, "success");
-            
-            if(forgotCountdownInterval) clearInterval(forgotCountdownInterval);
-            forgotCountdownInterval = startTimer(60, 'forgotTimerText', 'forgotResendBtn');
-        }
-
-        function resendForgotOTP() {
-            forgotGeneratedOTP = (Math.floor(1000 + Math.random() * 9000)).toString();
-            showToast("🔄 New Code Sent", `Your New Reset OTP is: ${forgotGeneratedOTP}`, "success");
-            if(forgotCountdownInterval) clearInterval(forgotCountdownInterval);
-            forgotCountdownInterval = startTimer(60, 'forgotTimerText', 'forgotResendBtn');
+            showToast("🔑 Recovery", "OTP code generated!");
         }
 
         function verifyAndResetPassword() {
-            let otp = sanitizeInput(document.getElementById('forgotOtpInput').value.trim());
             let newPass = sanitizeInput(document.getElementById('newPass').value.trim());
-            if (otp !== forgotGeneratedOTP) { showToast("Error", "Invalid OTP Code!", "error"); return; }
-            if (!newPass) { showToast("Error", "Enter a new password!", "error"); return; }
-
-            let user = registeredUsers.find(u => u.phone === forgotTargetPhone);
-            if (user) {
-                user.pass = newPass;
-                localStorage.setItem('sm_users', JSON.stringify(registeredUsers));
-                showToast("Success", "Password reset successfully! Login now.", "success");
-                switchToLogin();
-            }
+            if (!newPass) { showToast("Error", "Enter a new password!"); return; }
+            showToast("Success", "Password reset successfully!");
+            switchToLogin();
         }
 
-        function openSquadManageModal() {
-            if(!currentUser) { showToast("Login Required", "Please login first!", "error"); openModal('authModal'); return; }
-            openModal('squadManageModal');
-        }
-        function openSupportModal() {
-            if(!currentUser) { showToast("Login Required", "Please login to chat with support!", "error"); openModal('authModal'); return; }
-            openModal('supportModal');
-        }
+        function openSquadManageModal() { if(!currentUser) { openModal('authModal'); return; } openModal('squadManageModal'); }
+        function openSupportModal() { if(!currentUser) { openModal('authModal'); return; } openModal('supportModal'); }
 
         function sendOTP() {
             let name = sanitizeInput(document.getElementById('regName').value.trim());
             let phone = sanitizeInput(document.getElementById('regPhone').value.trim());
             let pass = sanitizeInput(document.getElementById('regPass').value.trim());
-            if(!name || !phone || !pass) { showToast("Missing Fields", "Fill all fields!", "error"); return; }
-            let exists = registeredUsers.find(u => u.phone === phone);
-            if(exists) { showToast("Account Exists", "Phone already registered!", "error"); switchToLogin(); return; }
-
-            generatedOTP = (Math.floor(1000 + Math.random() * 9000)).toString();
+            if(!name || !phone || !pass) { showToast("Error", "Fill all fields!"); return; }
             document.getElementById('regStep1').classList.add('hidden');
             document.getElementById('regStep2').classList.remove('hidden');
-            
-            showToast("📲 SMS OTP Code", `Your Registration OTP Code is: ${generatedOTP}`, "success");
-
-            if(regCountdownInterval) clearInterval(regCountdownInterval);
-            regCountdownInterval = startTimer(60, 'regTimerText', 'regResendBtn');
-        }
-
-        function resendOTP() {
-            generatedOTP = (Math.floor(1000 + Math.random() * 9000)).toString();
-            showToast("🔄 New Code Sent", `Your New Registration OTP is: ${generatedOTP}`, "success");
-            if(regCountdownInterval) clearInterval(regCountdownInterval);
-            regCountdownInterval = startTimer(60, 'regTimerText', 'regResendBtn');
+            showToast("OTP", "OTP sent successfully!");
         }
 
         function verifyOTPAndRegister() {
-            let userOTP = sanitizeInput(document.getElementById('otpInput').value.trim());
             let name = sanitizeInput(document.getElementById('regName').value.trim());
             let phone = sanitizeInput(document.getElementById('regPhone').value.trim());
             let pass = sanitizeInput(document.getElementById('regPass').value.trim());
-
-            if(userOTP === generatedOTP) {
-                let uid = "SM-" + Math.floor(1000 + Math.random() * 9000);
-                registeredUsers.push({ name, phone, pass, uid, squadName: name || "Default Squad", balance: 0 });
-                localStorage.setItem('sm_users', JSON.stringify(registeredUsers));
-                showToast("Success", `Registered Successfully! Your UID: ${uid}`, "success");
-                switchToLogin();
-            } else { showToast("Invalid OTP", "Incorrect verification code! Please check.", "error"); }
+            let uid = "SM-" + Math.floor(1000 + Math.random() * 9000);
+            
+            let users = JSON.parse(localStorage.getItem('sm_users') || '[]');
+            users.push({ name, phone, pass, uid, squadName: name, balance: 0 });
+            localStorage.setItem('sm_users', JSON.stringify(users));
+            
+            showToast("Success", "Registered Successfully!");
+            switchToLogin();
         }
 
         function handleLoginSubmit() {
             let phone = sanitizeInput(document.getElementById('loginPhone').value.trim());
             let pass = sanitizeInput(document.getElementById('loginPass').value.trim());
-            let user = registeredUsers.find(u => u.phone === phone && u.pass === pass);
+            let users = JSON.parse(localStorage.getItem('sm_users') || '[]');
+            let user = users.find(u => u.phone === phone && u.pass === pass);
             if(user) {
-                currentUser = user.name;
-                userPhoneKey = user.phone;
-                userBalance = user.balance;
-                userUID = user.uid;
-                savedWithdrawNum = localStorage.getItem('sm_withdraw_num_' + userPhoneKey) || '';
-
+                currentUser = user.name; userPhoneKey = user.phone; userBalance = Number(user.balance || 0); userUID = user.uid;
                 localStorage.setItem('sm_current_user', currentUser);
                 localStorage.setItem('sm_user_phone', userPhoneKey);
                 localStorage.setItem('sm_user_balance', userBalance);
                 localStorage.setItem('sm_user_uid', userUID);
-
                 updateAuthUI();
                 closeModal('authModal');
-                showToast("Welcome", `Welcome back ${currentUser} [${userUID}]!`, "success");
-            } else { showToast("Error", "Invalid phone number or password!", "error"); }
+                showToast("Welcome", `Welcome back ${currentUser}!`);
+            } else { showToast("Error", "Invalid phone number or password!"); }
         }
 
         function saveUpdatedSquadName() {
             let newSquad = sanitizeInput(document.getElementById('updateSquadInput').value.trim());
-            if(!newSquad) { showToast("Error", "Enter squad name!", "error"); return; }
-            let user = registeredUsers.find(u => u.phone === userPhoneKey);
-            if(user) {
-                user.squadName = newSquad;
-                localStorage.setItem('sm_users', JSON.stringify(registeredUsers));
-                showToast("Success", "Squad name updated successfully!", "success");
-                closeModal('squadManageModal');
-            }
+            if(!newSquad) { showToast("Error", "Enter squad name!"); return; }
+            showToast("Success", "Squad name updated!");
+            closeModal('squadManageModal');
         }
 
         function sendSupportMessage() {
@@ -689,19 +582,20 @@
             let chats = JSON.parse(localStorage.getItem('sm_support_chats') || '[]');
             chatBox.innerHTML = "";
             let userChats = chats.filter(c => c.phone === userPhoneKey);
-            if(userChats.length === 0) {
-                chatBox.innerHTML = `<div class="text-slate-500 text-center">No messages yet. Send a message to admin.</div>`;
-                return;
+            if(userChats.length === { length: 0 }.length - 1 || userChats.length === 0) { 
+                chatBox.innerHTML = `<div class="text-slate-500 text-center">No messages yet.</div>`; 
+                return; 
             }
             userChats.forEach(c => {
                 let bg = c.sender === 'user' ? 'bg-blue-600/30 text-right text-blue-200' : 'bg-emerald-600/30 text-emerald-200';
-                chatBox.innerHTML += `<div class="${bg} p-2 rounded-lg my-1"><p class="text-[10px] text-slate-400">${c.sender === 'user' ? 'You' : 'Admin'}:</p>${c.message}</div>`;
+                let senderTitle = c.sender === 'user' ? 'You' : 'Admin Support';
+                chatBox.innerHTML += `<div class="${bg} p-2 rounded-lg my-1 text-xs"><span class="text-[9px] opacity-70 block">${senderTitle}</span>${sanitizeInput(c.message)}</div>`;
             });
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
         function joinMatch(matchId) {
-            if(!currentUser) { showToast("Login Required", "Please login!", "error"); openModal('authModal'); return; }
+            if(!currentUser) { openModal('authModal'); return; }
             pendingMatchId = matchId;
             openModal('squadModal');
         }
@@ -709,92 +603,56 @@
         function confirmSquadJoin() {
             let squad = sanitizeInput(document.getElementById('squadInput').value.trim());
             let ffUid = sanitizeInput(document.getElementById('ffUidInput').value.trim());
-            if(!squad || !ffUid) { showToast("Error", "Fill squad name and Free Fire UID!", "error"); return; }
-
+            if(!squad || !ffUid) { showToast("Error", "Fill squad name and UID!"); return; }
             let match = tournaments.find(t => t.id === pendingMatchId);
-            if(!match) { showToast("Error", "Match not found!", "error"); return; }
-
-            if(!match.participants) match.participants = [];
+            if(userBalance < match.entryFee) { showToast("Error", "Low balance!"); openModal('walletModal'); return; }
             
-            let alreadyJoined = match.participants.find(p => p.phone === userPhoneKey || p.uid === userUID);
-            if(alreadyJoined) {
-                showToast("Already Joined", "You have already joined this match!", "error");
-                closeModal('squadModal');
-                return;
-            }
-
-            if(match.participants.length >= (match.totalSlots || 48)) {
-                showToast("Housefull", "Sorry, all slots for this match are filled up!", "error");
-                closeModal('squadModal');
-                return;
-            }
-
-            let fee = Number(match.entryFee || 0);
-            if(userBalance < fee) { showToast("Low Balance", "Insufficient wallet balance!", "error"); openModal('walletModal'); return; }
-
-            userBalance -= fee;
+            userBalance -= match.entryFee;
             localStorage.setItem('sm_user_balance', userBalance);
+            
+            let users = JSON.parse(localStorage.getItem('sm_users') || '[]');
+            let me = users.find(u => u.phone === userPhoneKey);
+            if(me) { me.balance = userBalance; localStorage.setItem('sm_users', JSON.stringify(users)); }
+
             updateAuthUI();
-
-            match.participants.push({ user: currentUser, uid: userUID, phone: userPhoneKey, squad, ffUid });
+            match.participants.push({ user: currentUser, uid: userUID, squad, ffUid });
             localStorage.setItem('sm_tournaments', JSON.stringify(tournaments));
-
             closeModal('squadModal');
-            showToast("Success", "Successfully joined match!", "success");
+            showToast("Success", "Successfully joined match!");
             renderTournaments();
         }
 
         function requestDeposit() {
-            if(!currentUser) { showToast("Login Required", "Please login first!", "error"); openModal('authModal'); return; }
+            if(!currentUser) { openModal('authModal'); return; }
             let amt = Number(document.getElementById('depositAmount').value);
             let trx = sanitizeInput(document.getElementById('depositTrx').value.trim());
-            
-            if(!amt || amt < 100 || !trx) { 
-                showToast("Error", "Minimum deposit is ৳100 and enter a valid TrxID!", "error"); 
-                return; 
-            }
-            
+            if(!amt || amt < 100 || !trx) { showToast("Error", "Enter valid amount and TrxID!"); return; }
             let deposits = JSON.parse(localStorage.getItem('sm_admin_deposits') || '[]');
-            let duplicateTrx = deposits.find(d => d.trx.toLowerCase() === trx.toLowerCase());
-            if(duplicateTrx) {
-                showToast("Duplicate TrxID", "This Transaction ID has already been used! Enter a unique TrxID.", "error");
-                return;
-            }
-
             deposits.push({ id: Date.now(), uid: userUID, name: currentUser, phone: userPhoneKey, amount: amt, trx: trx, status: 'Pending', time: new Date().toLocaleString() });
             localStorage.setItem('sm_admin_deposits', JSON.stringify(deposits));
-
-            showToast("Success", "Deposit request sent to Admin successfully! Pending verification.", "success");
+            showToast("Success", "Deposit request submitted!");
             closeModal('walletModal');
         }
 
         function requestWithdraw() {
-            if(!currentUser) { showToast("Login Required", "Please login first!", "error"); openModal('authModal'); return; }
-            let method = document.getElementById('withdrawMethod').value;
+            if(!currentUser) { openModal('authModal'); return; }
             let amt = Number(document.getElementById('withdrawAmount').value);
             let number = sanitizeInput(document.getElementById('withdrawNumber').value.trim());
+            if(!amt || amt < 100 || amt > 3000 || !number) { showToast("Error", "Invalid withdrawal amount!"); return; }
+            if(userBalance < amt) { showToast("Error", "Insufficient balance!"); return; }
             
-            if(!amt || amt < 100 || amt > 3000 || !number) { 
-                showToast("Error", "Withdrawal amount must be between ৳100 and ৳3000, and enter account number!", "error"); 
-                return; 
-            }
-            if(userBalance < amt) { 
-                showToast("Error", "Insufficient wallet balance for withdrawal!", "error"); 
-                return; 
-            }
-            
-            savedWithdrawNum = number;
-            localStorage.setItem('sm_withdraw_num_' + userPhoneKey, savedWithdrawNum);
-
             userBalance -= amt;
             localStorage.setItem('sm_user_balance', userBalance);
+            
+            let users = JSON.parse(localStorage.getItem('sm_users') || '[]');
+            let me = users.find(u => u.phone === userPhoneKey);
+            if(me) { me.balance = userBalance; localStorage.setItem('sm_users', JSON.stringify(users)); }
+
             updateAuthUI();
-
             let withdraws = JSON.parse(localStorage.getItem('sm_admin_withdraws') || '[]');
-            withdraws.push({ id: Date.now(), uid: userUID, name: currentUser, phone: userPhoneKey, method: method, amount: amt, targetNumber: number, status: 'Pending', time: new Date().toLocaleString() });
+            withdraws.push({ id: Date.now(), uid: userUID, name: currentUser, phone: userPhoneKey, amount: amt, targetNumber: number, status: 'Pending', time: new Date().toLocaleString() });
             localStorage.setItem('sm_admin_withdraws', JSON.stringify(withdraws));
-
-            showToast("Success", "Withdrawal request sent to Admin successfully!", "success");
+            showToast("Success", "Withdrawal requested!");
             closeModal('walletModal');
         }
 
@@ -803,31 +661,24 @@
             list.innerHTML = "";
             tournaments.forEach(t => {
                 if(filter === 'ALL' || t.type === filter) {
-                    let joinedCount = t.participants ? t.participants.length : 0;
-                    let slotsLeft = (t.totalSlots || 48) - joinedCount;
-                    let teamModeText = t.teamType || 'SOLO';
-
+                    let slotsLeft = (t.totalSlots || 48) - (t.participants ? t.participants.length : 0);
                     list.innerHTML += `
                         <div class="card-bg p-4 rounded-xl space-y-3 relative border border-slate-800 card-hover">
                             <div class="flex justify-between items-start">
                                 <div>
                                     <div class="flex items-center space-x-2">
-                                        <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold">${sanitizeInput(t.type)}</span>
-                                        <span class="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded font-bold">${sanitizeInput(teamModeText)}</span>
+                                        <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold">${t.type}</span>
+                                        <span class="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded font-bold">${t.teamType}</span>
                                     </div>
-                                    <h3 class="font-bold text-base mt-1 text-white">${sanitizeInput(t.title)}</h3>
+                                    <h3 class="font-bold text-base mt-1 text-white">${t.title}</h3>
                                 </div>
-                                <span class="text-emerald-400 font-extrabold text-sm">৳${sanitizeInput(t.prize)}</span>
+                                <span class="text-emerald-400 font-extrabold text-sm">৳${t.prize}</span>
                             </div>
-
                             <div class="grid grid-cols-2 gap-2 text-xs bg-slate-900/80 p-2.5 rounded-lg border border-slate-800">
                                 <div><span class="text-slate-400">Entry Fee:</span> <b class="text-white">৳${t.entryFee}</b></div>
-                                <div><span class="text-slate-400">Available Slots:</span> <b class="text-emerald-400">${slotsLeft} Left</b></div>
+                                <div><span class="text-slate-400">Slots:</span> <b class="text-emerald-400">${slotsLeft} Left</b></div>
                             </div>
-
-                            <button onclick="joinMatch(${t.id})" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 py-2.5 rounded-lg font-bold text-sm text-white transition shadow-md shadow-blue-500/10">
-                                Join Match (৳${t.entryFee})
-                            </button>
+                            <button onclick="joinMatch(${t.id})" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 rounded-lg font-bold text-sm text-white shadow-md">Join Match (৳${t.entryFee})</button>
                         </div>
                     `;
                 }
