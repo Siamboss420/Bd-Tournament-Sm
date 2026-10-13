@@ -1,0 +1,7 @@
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.vercel.bd_tournament_sm_cgfv.twa",
+        "sha256_cert_fingerprints": ["33:DD:BA:60:5C:CE:47:6F:D4:82:C0:BB:63:76:50:E1:4C:B6:53:BF:44:16:AD:89:CF:40:61:72:B4:D5:30:A1"]
+      }
+    }]
