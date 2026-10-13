@@ -1,12 +1,8 @@
-[
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "app.vercel.bd_tournament_sm_cgfv.twa",
-      "sha256_cert_fingerprints": [
-        "33:DD:BA:..."
-      ]
-    }
-  }
-]
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.vercel.bd_tournament_sm_cgfv.twa",
+        "sha256_cert_fingerprints": ["AF:A4:89:F8:55:83:7E:81:E5:C7:75:E2:1C:08:77:71:1D:D8:41:DB:59:FC:07:55:B0:E4:54:03:59:21:9C:6B"]
+      }
+    }]
