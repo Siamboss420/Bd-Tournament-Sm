@@ -2,13 +2,14 @@
   "name": "BD TOURNAMENT SM",
   "short_name": "BD Tournament",
   "description": "BD TOURNAMENT SM is a secure Free Fire esports platform for daily matches and tournaments.",
-  "id": "app.vercel.bd_tournament_sm",
-  "start_url": "/",
+  "id": "/?standalone=true",
+  "start_url": "/?mode=standalone",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "fullscreen", "minimal-ui"],
   "orientation": "portrait",
   "background_color": "#0b0f19",
-  "theme_color": "#3b82f6",
+  "theme_color": "#0b0f19",
   "prefer_related_applications": false,
   "icons": [
     {
