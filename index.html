@@ -7,20 +7,16 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
     <title>BD TOURNAMENT SM - Secure Esports Platform</title>
     
-    <!-- PWA Meta Tags & Standard Manifest Link -->
     <meta name="description" content="BD TOURNAMENT SM is a secure Free Fire esports platform for daily matches and tournaments.">
     <meta name="theme-color" content="#3b82f6">
     <link rel="icon" type="image/png" href="./4354%20(1).png">
     <link rel="apple-touch-icon" href="./4354%20(1).png">
     <link rel="manifest" href="manifest.json">
 
-    <!-- Service Worker Registration Script -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('SW registered!', reg))
-                    .catch(err => console.log('SW registration failed: ', err));
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed', err));
             });
         }
     </script>
@@ -32,13 +28,15 @@
         body { font-family: 'Poppins', sans-serif; background-color: #0b0f19; color: #f3f4f6; user-select: none; }
         
         @keyframes rgbGlow {
-            0% { color: #3b82f6; text-shadow: 0 0 8px rgba(59, 130, 246, 0.6); }
-            33% { color: #8b5cf6; text-shadow: 0 0 8px rgba(139, 92, 246, 0.6); }
-            66% { color: #06b6d4; text-shadow: 0 0 8px rgba(6, 182, 212, 0.6); }
-            100% { color: #3b82f6; text-shadow: 0 0 8px rgba(59, 130, 246, 0.6); }
+            0% { color: #3b82f6; text-shadow: 0 0 10px rgba(59, 130, 246, 0.7); border-color: rgba(59, 130, 246, 0.7); box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            33% { color: #8b5cf6; text-shadow: 0 0 10px rgba(139, 92, 246, 0.7); border-color: rgba(139, 92, 246, 0.7); box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            66% { color: #06b6d4; text-shadow: 0 0 10px rgba(6, 182, 212, 0.7); border-color: rgba(6, 182, 212, 0.7); box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
+            100% { color: #3b82f6; text-shadow: 0 0 10px rgba(59, 130, 246, 0.7); border-color: rgba(59, 130, 246, 0.7); box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
         }
         .rgb-text-glow { animation: rgbGlow 5s infinite; }
-        .card-bg { background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%); border: 1px solid rgba(59, 130, 246, 0.2); }
+        .rgb-border-glow { animation: rgbGlow 5s infinite; background: linear-gradient(145deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%); border-width: 2px; backdrop-filter: blur(12px); }
+        .card-bg { background: linear-gradient(145deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%); border: 1px solid rgba(59, 130, 246, 0.3); backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); }
+        .card-hover:hover { border-color: rgba(59, 130, 246, 0.8); transform: translateY(-3px); transition: all 0.3s ease; }
         
         @keyframes popupSlide {
             from { transform: translateY(-20px); opacity: 0; }
@@ -49,30 +47,34 @@
 </head>
 <body class="min-h-screen flex flex-col relative">
 
-    <!-- Offline Network Alert Banner -->
-    <div id="offlineBanner" class="fixed top-0 inset-x-0 bg-red-600 text-white text-xs font-bold text-center py-1 hidden z-50">
-        ⚠️ ইন্টারনেট সংযোগ বিচ্ছিন্ন হয়েছে! পুনরায় সংযোগের চেষ্টা করা হচ্ছে...
-    </div>
-
-    <!-- Digital In-App Update Modal Popup -->
-    <div id="updateModalPopup" class="fixed inset-0 bg-black/80 hidden z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="card-bg p-6 rounded-2xl w-full max-w-sm text-center space-y-4 custom-popup-anim border border-blue-500/40 shadow-2xl">
-            <div class="w-16 h-16 bg-blue-600/20 text-blue-400 mx-auto rounded-2xl flex items-center justify-center text-3xl rgb-text-glow border border-blue-500/30">
+    <!-- RGB Glowing App Download Popup Modal -->
+    <div id="apkDownloadModal" class="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4 backdrop-blur-md">
+        <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm text-center space-y-4 custom-popup-anim shadow-2xl relative">
+            <button onclick="closeApkModal()" class="absolute top-3 right-3 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="w-16 h-16 bg-blue-600/20 text-blue-400 mx-auto rounded-2xl flex items-center justify-center text-3xl rgb-text-glow border border-blue-500/40">
                 <i class="fa-solid fa-shield-halved"></i>
             </div>
             <div>
                 <h3 class="text-xl font-extrabold rgb-text-glow">BD TOURNAMENT SM</h3>
-                <p class="text-xs text-slate-400 mt-1">নতুন আপডেট ভার্সন উপলব্ধ রয়েছে!</p>
+                <p class="text-xs text-slate-300 mt-1">অফিসিয়াল অ্যান্ড্রয়েড অ্যাপ ডাউনলোড করুন!</p>
             </div>
-            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-left text-xs space-y-1 text-slate-300">
-                <p class="font-bold text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i> নতুন ফিচারসমূহ:</p>
-                <p>• উন্নত সিকিউরিটি ও ফাস্ট পারফরম্যান্স</p>
-                <p>• নতুন স্কোয়াড ও সাপোর্ট সিস্টেম</p>
+            <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 text-left text-xs space-y-1.5 text-slate-300">
+                <p class="font-bold text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i> অ্যাপের সুবিধাসমূহ:</p>
+                <p>• ফাস্ট ও সিকিউর টুর্নামেন্ট অভিজ্ঞতা</p>
+                <p>• লাইভ চ্যাট ও instant ওয়ালেট সিস্টেম</p>
             </div>
-            <a id="updateDownloadBtn" href="#" target="_blank" class="block w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 py-3 rounded-xl font-bold text-sm text-white transition shadow-lg shadow-blue-500/20">
-                <i class="fa-solid fa-download mr-2"></i> এখনই আপডেট করুন
+            <a href="YOUR_SIGNED_APK_DIRECT_LINK" target="_blank" class="block w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 py-3.5 rounded-xl font-bold text-sm text-white transition shadow-lg shadow-emerald-500/20">
+                <i class="fa-solid fa-cloud-arrow-down mr-2"></i> Download APK Now
             </a>
         </div>
+    </div>
+
+    <!-- Live Announcement Ticker / Marquee -->
+    <div class="bg-slate-950 border-b border-slate-800 text-xs py-2 px-4 text-slate-300 flex items-center space-x-2">
+        <span class="bg-red-600 text-white font-extrabold px-2 py-0.5 rounded text-[10px] animate-pulse">LIVE</span>
+        <marquee id="marqueeText" class="font-semibold text-slate-200">🔥 BD TOURNAMENT SM-এ প্রতিদিনের সোলো ও স্কোয়াড কাস্টম ম্যাচে অংশ নিয়ে জিতে নিন হাজার হাজার টাকা!</marquee>
     </div>
 
     <!-- Custom Toast Notification -->
@@ -87,27 +89,28 @@
                     <p id="toastMessage" class="text-xs text-slate-300">Details...</p>
                 </div>
             </div>
-            <button onclick="hideToast()" class="text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark"></i></button>
+            <button onclick="hideToast()" class="bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-7 h-7 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
         </div>
     </div>
 
     <!-- Top Navigation -->
-    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40">
+    <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <span class="bg-blue-600 text-white font-bold p-2 rounded-lg text-lg"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold p-2 rounded-xl text-lg shadow-lg shadow-blue-500/20"><i class="fa-solid fa-shield-halved"></i></span>
                 <div>
-                    <h1 class="font-extrabold text-xl tracking-wider rgb-text-glow">BD TOURNAMENT SM</h1>
-                    <p class="text-xs text-slate-400">Secure Free Fire Esports Platform</p>
+                    <h1 class="font-extrabold text-lg tracking-wider rgb-text-glow">BD TOURNAMENT SM</h1>
+                    <p class="text-[10px] text-slate-400">Secure Esports Platform</p>
                 </div>
             </div>
-            <div class="flex items-center space-x-3">
-                <button onclick="openModal('walletModal')" class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-sm font-medium text-emerald-400 flex items-center space-x-1.5 hover:bg-slate-700">
-                    <i class="fa-solid fa-wallet"></i>
+            <div class="flex items-center space-x-2.5">
+                <button onclick="openModal('walletModal')" class="bg-slate-800/80 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold text-emerald-400 flex items-center space-x-1.5 hover:bg-slate-700 transition">
+                    <i class="fa-solid fa-wallet text-emerald-400"></i>
                     <span id="navWallet">৳0</span>
+                    <span class="bg-emerald-500/20 text-emerald-400 rounded-full w-4 h-4 flex items-center justify-center text-[10px] ml-1">+</span>
                 </button>
-                <button onclick="openModal('authModal')" id="authBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold transition">
-                    Login / Signup
+                <button onclick="openModal('authModal')" id="authBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition shadow-lg shadow-blue-600/20">
+                    Login
                 </button>
             </div>
         </div>
@@ -116,93 +119,102 @@
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 py-6 w-full space-y-6">
         <!-- Live Winner Announcement Banner -->
-        <div class="card-bg p-4 rounded-xl border-l-4 border-yellow-500 shadow-lg flex items-center justify-between">
+        <div class="card-bg p-4 rounded-2xl border-l-4 border-yellow-500 shadow-xl flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="bg-yellow-500/20 p-3 rounded-lg text-yellow-400">
+                <div class="bg-yellow-500/20 p-3 rounded-xl text-yellow-400">
                     <i class="fa-solid fa-trophy text-xl"></i>
                 </div>
                 <div>
-                    <h3 class="text-sm font-bold rgb-text-glow">Latest Tournament Champion! 🏆</h3>
-                    <p id="winnerDisplayBanner" class="text-xs text-slate-300">Congratulations to <b id="winnerTeamName" class="text-yellow-400 font-bold">TEAM VIPER</b> for winning! 🔥</p>
+                    <h3 class="text-xs font-bold rgb-text-glow uppercase tracking-wider">Latest Champion 🏆</h3>
+                    <p id="winnerDisplayBanner" class="text-xs text-slate-300">Congratulations to <b id="winnerTeamName" class="text-yellow-400 font-bold">TEAM VIPER</b>!</p>
                 </div>
             </div>
-            <span class="text-xs bg-yellow-500 text-black font-bold px-2 py-1 rounded">WINNER</span>
+            <span class="text-[10px] bg-yellow-500 text-black font-extrabold px-2.5 py-1 rounded-lg tracking-wider">WINNER</span>
         </div>
 
-        <!-- Squad Name Management & Live Support Floating Buttons -->
+        <!-- Squad Name Management & Live Support Buttons -->
         <div class="grid grid-cols-2 gap-3">
-            <button onclick="openSquadManageModal()" class="p-3 card-bg rounded-xl text-center font-semibold text-sm hover:border-blue-500 transition text-blue-400 flex items-center justify-center space-x-2">
-                <i class="fa-solid fa-users-gear"></i>
-                <span>Manage Squad Name</span>
+            <button onclick="openSquadManageModal()" class="p-3 card-bg rounded-xl text-center font-semibold text-xs hover:border-blue-500 transition text-blue-400 flex flex-col items-center justify-center space-y-1 card-hover">
+                <i class="fa-solid fa-users-gear text-sm"></i>
+                <span>Squad Name</span>
             </button>
-            <button onclick="openSupportModal()" class="p-3 card-bg rounded-xl text-center font-semibold text-sm hover:border-emerald-500 transition rgb-text-glow flex items-center justify-center space-x-2">
-                <i class="fa-solid fa-headset"></i>
-                <span>Support & Help</span>
+            <button onclick="openSupportModal()" class="p-3 card-bg rounded-xl text-center font-semibold text-xs hover:border-emerald-500 transition rgb-text-glow flex flex-col items-center justify-center space-y-1 card-hover">
+                <i class="fa-solid fa-headset text-sm"></i>
+                <span>Live Support</span>
             </button>
         </div>
 
         <!-- Mode Selection Tabs -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <button onclick="filterTournaments('ALL')" class="p-3 card-bg rounded-xl text-center font-semibold text-sm hover:border-blue-500 transition">🔥 All Tournaments</button>
-            <button onclick="filterTournaments('CS')" class="p-3 card-bg rounded-xl text-center font-semibold text-sm hover:border-blue-500 transition">⚔️ CS 4v4</button>
-            <button onclick="filterTournaments('BR')" class="p-3 card-bg rounded-xl text-center font-semibold text-sm hover:border-blue-500 transition">🎯 BR Mode</button>
-            <button onclick="filterTournaments('LONE')" class="p-3 card-bg rounded-xl text-center font-semibold text-sm hover:border-blue-500 transition">⚡ Lone Wolf</button>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5">
+            <button onclick="filterTournaments('ALL')" class="p-2.5 card-bg rounded-xl text-center font-bold text-xs hover:border-blue-500 transition card-hover">🔥 All Matches</button>
+            <button onclick="filterTournaments('CUSTOM')" class="p-2.5 card-bg rounded-xl text-center font-bold text-xs hover:border-amber-500 transition text-amber-400 card-hover">🎯 Custom Match</button>
+            <button onclick="filterTournaments('CS')" class="p-2.5 card-bg rounded-xl text-center font-bold text-xs hover:border-blue-500 transition card-hover">⚔️ CS 4v4</button>
+            <button onclick="filterTournaments('BR')" class="p-2.5 card-bg rounded-xl text-center font-bold text-xs hover:border-blue-500 transition card-hover">🚀 BR Mode</button>
+            <button onclick="filterTournaments('LONE')" class="p-2.5 card-bg rounded-xl text-center font-bold text-xs hover:border-blue-500 transition card-hover">⚡ Lone Wolf</button>
         </div>
 
         <!-- Tournaments List -->
         <div>
-            <h2 class="text-lg font-bold mb-4 flex items-center justify-between">
-                <span class="rgb-text-glow"><i class="fa-solid fa-fire mr-2"></i> Running & Upcoming Matches</span>
+            <h2 class="text-base font-bold mb-4 flex items-center justify-between">
+                <span class="rgb-text-glow flex items-center"><i class="fa-solid fa-fire mr-2"></i> Running & Upcoming Matches</span>
             </h2>
             <div id="tournamentList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-500 px-6">
+    <footer class="bg-slate-900/90 border-t border-slate-800 py-4 text-center text-[11px] text-slate-500 px-6">
         <p>&copy; 2026 BD TOURNAMENT SM. All rights reserved. Powered by SIAM TRADERS.</p>
     </footer>
 
     <!-- Modals -->
-    <div id="squadManageModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
-        <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
-            <button onclick="closeModal('squadManageModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-xl font-bold text-center rgb-text-glow">Update Squad Name</h3>
-            <p class="text-xs text-slate-400 text-center">You can update your squad name here (Available after tournament completion).</p>
-            <input type="text" id="updateSquadInput" placeholder="Enter New Squad Name" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none focus:border-blue-500">
-            <button onclick="saveUpdatedSquadName()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm transition">Save Changes</button>
+    <div id="squadManageModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
+        <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
+            <button onclick="closeModal('squadManageModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-lg font-bold text-center rgb-text-glow">Update Squad Name</h3>
+            <p class="text-xs text-slate-400 text-center">You can update your squad name here.</p>
+            <input type="text" id="updateSquadInput" placeholder="Enter New Squad Name" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 text-white">
+            <button onclick="saveUpdatedSquadName()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm transition text-white">Save Changes</button>
         </div>
     </div>
 
-    <div id="supportModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
-        <div class="card-bg p-6 rounded-2xl w-full max-w-md space-y-4 relative flex flex-col h-[450px]">
-            <button onclick="closeModal('supportModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-lg font-bold rgb-text-glow text-center border-b border-slate-800 pb-2">Live Support Chat</h3>
+    <div id="supportModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
+        <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-md space-y-4 relative flex flex-col h-[450px]">
+            <button onclick="closeModal('supportModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-base font-bold rgb-text-glow text-center border-b border-slate-800 pb-2">Live Support Chat</h3>
             <div id="chatMessages" class="flex-grow overflow-y-auto space-y-2 p-2 bg-slate-950/50 rounded-xl border border-slate-800 text-xs"></div>
             <div class="flex space-x-2 pt-2">
-                <input type="text" id="chatInput" placeholder="Type your message..." class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-xs focus:outline-none">
-                <button onclick="sendSupportMessage()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-xs">Send</button>
+                <input type="text" id="chatInput" placeholder="Type your message..." class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-xs focus:outline-none text-white">
+                <button onclick="sendSupportMessage()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-xs text-white">Send</button>
             </div>
         </div>
     </div>
 
-    <div id="squadModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
-        <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
-            <button onclick="closeModal('squadModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-xl font-bold text-center rgb-text-glow">Match Registration</h3>
-            <input type="text" id="squadInput" placeholder="Squad Name (e.g. TEAM VIPER)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none">
-            <input type="text" id="ffUidInput" placeholder="Free Fire Game UID" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none">
-            <button onclick="confirmSquadJoin()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-sm">Confirm Entry</button>
+    <div id="squadModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
+        <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
+            <button onclick="closeModal('squadModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-lg font-bold text-center rgb-text-glow">Match Registration</h3>
+            <input type="text" id="squadInput" placeholder="Squad/Player Name (e.g. TEAM VIPER)" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none text-white">
+            <input type="text" id="ffUidInput" placeholder="Free Fire Game UID" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm focus:outline-none text-white">
+            <button onclick="confirmSquadJoin()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-sm text-white">Confirm Entry</button>
         </div>
     </div>
 
-    <div id="authModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
-        <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
-            <button onclick="closeModal('authModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-xl font-bold text-center rgb-text-glow">Player Secure Login</h3>
-            <input type="tel" id="loginPhone" placeholder="Phone Number" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
+    <div id="authModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
+        <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
+            <button onclick="closeModal('authModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="text-center space-y-1">
+                <div class="w-12 h-12 bg-blue-600/20 text-blue-400 mx-auto rounded-xl flex items-center justify-center text-2xl rgb-text-glow border border-blue-500/40">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-lg font-extrabold rgb-text-glow tracking-wider">BD TOURNAMENT SM</h3>
+                <p class="text-xs text-slate-400">Player Secure Login</p>
+            </div>
+
+            <input type="tel" id="loginPhone" placeholder="Phone Number" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
             <div class="relative">
-                <input type="password" id="loginPass" placeholder="Password" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm pr-10">
+                <input type="password" id="loginPass" placeholder="Password" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm pr-10 text-white">
                 <button type="button" onclick="togglePassword('loginPass', 'loginEyeIcon')" class="absolute right-3 top-3.5 text-slate-400">
                     <i id="loginEyeIcon" class="fa-solid fa-eye"></i>
                 </button>
@@ -210,95 +222,103 @@
             <div class="text-right">
                 <button onclick="openForgotModal()" class="text-xs text-blue-400 hover:underline font-semibold">Forgot Password?</button>
             </div>
-            <button onclick="handleLoginSubmit()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm">Login</button>
+            <button onclick="handleLoginSubmit()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm text-white">Login</button>
             <div class="text-center pt-2">
                 <p class="text-xs text-slate-400">Don't have an account? <button onclick="switchToRegister()" class="text-blue-400 font-bold hover:underline">Register here</button></p>
             </div>
         </div>
     </div>
 
-    <div id="forgotModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
-        <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
-            <button onclick="closeModal('forgotModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-xl font-bold text-center rgb-text-glow">Reset Password</h3>
+    <div id="forgotModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
+        <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
+            <button onclick="openModal('authModal'); closeModal('forgotModal');" class="absolute top-4 left-4 bg-slate-800 text-slate-300 hover:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center transition" title="Back to Login">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button onclick="closeModal('forgotModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="text-center space-y-1 pt-2">
+                <h3 class="text-lg font-extrabold rgb-text-glow tracking-wider">BD TOURNAMENT SM</h3>
+                <p class="text-xs text-slate-400">Reset Password</p>
+            </div>
+
             <div id="forgotStep1" class="space-y-3">
-                <input type="tel" id="forgotPhone" placeholder="Registered Phone Number" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
-                <button onclick="sendForgotOTP()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm">Send Recovery Code</button>
+                <input type="tel" id="forgotPhone" placeholder="Registered Phone Number" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
+                <button onclick="sendForgotOTP()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm text-white">Send Recovery Code</button>
             </div>
             <div id="forgotStep2" class="space-y-3 hidden">
                 <input type="number" id="forgotOtpInput" maxlength="4" placeholder="Enter 4-Digit OTP" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-center font-bold tracking-widest text-emerald-400">
-                <input type="password" id="newPass" placeholder="Enter New Password" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
-                <button onclick="verifyAndResetPassword()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-sm">Reset Password</button>
+                <input type="password" id="newPass" placeholder="Enter New Password" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
+                <button onclick="verifyAndResetPassword()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-sm text-white">Reset Password</button>
             </div>
         </div>
     </div>
 
-    <div id="registerModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
-        <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
-            <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-xl font-bold text-center rgb-text-glow">Player Registration</h3>
+    <div id="registerModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
+        <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
+            <button onclick="switchToLogin()" class="absolute top-4 left-4 bg-slate-800 text-slate-300 hover:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center transition" title="Back to Login">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="text-center space-y-1 pt-2">
+                <h3 class="text-lg font-extrabold rgb-text-glow tracking-wider">BD TOURNAMENT SM</h3>
+                <p class="text-xs text-slate-400">Player Registration</p>
+            </div>
+
             <div id="regStep1" class="space-y-3">
-                <input type="text" id="regName" placeholder="Free Fire IGN / Full Name" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
-                <input type="tel" id="regPhone" placeholder="Phone Number" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
-                <input type="password" id="regPass" placeholder="Create Password" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm">
-                <button onclick="sendOTP()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm">Send SMS OTP Code</button>
+                <input type="text" id="regName" placeholder="Free Fire IGN / Full Name" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
+                <input type="tel" id="regPhone" placeholder="Phone Number" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
+                <input type="password" id="regPass" placeholder="Create Password" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-white">
+                <button onclick="sendOTP()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm text-white">Send SMS OTP Code</button>
             </div>
             <div id="regStep2" class="space-y-3 hidden">
                 <input type="number" id="otpInput" maxlength="4" placeholder="Enter 4-Digit OTP" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl text-sm text-center font-bold tracking-widest text-emerald-400">
-                <button onclick="verifyOTPAndRegister()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-sm">Verify OTP & Register</button>
+                <button onclick="verifyOTPAndRegister()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-sm text-white">Verify OTP & Register</button>
             </div>
         </div>
     </div>
 
-    <div id="walletModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
-        <div class="card-bg p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
-            <button onclick="closeModal('walletModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-xl font-bold text-center rgb-text-glow">My Wallet</h3>
-            <div class="text-center bg-slate-800 p-4 rounded-xl">
+    <div id="walletModal" class="fixed inset-0 bg-black/75 hidden z-50 flex items-center justify-center p-4">
+        <div class="rgb-border-glow p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
+            <button onclick="closeModal('walletModal')" class="absolute top-4 right-4 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition shadow-md">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            
+            <h3 class="text-lg font-bold text-center rgb-text-glow">My Wallet</h3>
+            <div class="text-center bg-slate-800/80 p-4 rounded-xl border border-slate-700/50">
                 <p class="text-xs text-slate-400">Current Balance</p>
-                <h2 id="modalBalance" class="text-2xl font-extrabold text-emerald-400">৳0</h2>
+                <h2 id="modalBalance" class="text-2xl font-extrabold text-emerald-400 mt-1">৳0</h2>
             </div>
-            <div class="space-y-2 border-b border-slate-700 pb-3">
-                <label class="text-xs text-slate-400">Deposit Money (Min: ৳100)</label>
-                <input type="number" id="depositAmount" placeholder="Amount (Min ৳100)" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm">
-                <input type="text" id="depositTrx" placeholder="Enter TrxID" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm">
-                <button onclick="requestDeposit()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-2.5 rounded-xl font-bold text-sm">Add Deposit Request</button>
+            
+            <div class="space-y-2 border-b border-slate-700/80 pb-3">
+                <label class="text-xs text-emerald-400 font-bold block">💰 Deposit Money (Send Money to Nagad)</label>
+                <div class="bg-slate-900 p-2.5 rounded-xl border border-emerald-500/30 text-xs text-slate-300">
+                    <p>Agent/Personal Nagad Number:</p>
+                    <p class="text-sm font-extrabold text-yellow-400 tracking-wider select-all mt-0.5">01825420565</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">টাকা পাঠিয়ে নিচের বক্সে পরিমাণ ও TrxID দিন।</p>
+                </div>
+                <input type="number" id="depositAmount" placeholder="Amount (Min ৳100)" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm text-white">
+                <input type="text" id="depositTrx" placeholder="Enter TrxID" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm text-white">
+                <button onclick="requestDeposit()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-emerald-500/20 text-white">Submit Deposit Request</button>
             </div>
+
             <div class="space-y-2">
-                <label class="text-xs text-slate-400">Withdraw Money (Min: ৳100)</label>
-                <input type="number" id="withdrawAmount" placeholder="Amount (Min ৳100)" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm">
-                <input type="number" id="withdrawNumber" placeholder="bKash/Nagad Number" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm">
-                <button onclick="requestWithdraw()" class="w-full bg-blue-600 hover:bg-blue-700 py-2.5 rounded-xl font-bold text-sm">Request Withdrawal</button>
+                <label class="text-xs text-blue-400 font-bold block">💸 Withdraw Money (Payout Request)</label>
+                <select id="withdrawMethod" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm text-white focus:outline-none">
+                    <option value="bKash">bKash</option>
+                    <option value="Nagad">Nagad</option>
+                    <option value="Rocket">Rocket</option>
+                </select>
+                <input type="number" id="withdrawAmount" placeholder="Amount (Min ৳100)" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm text-white">
+                <input type="tel" id="withdrawNumber" placeholder="Your Personal Account Number" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-sm text-white">
+                <button onclick="requestWithdraw()" class="w-full bg-blue-600 hover:bg-blue-700 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-emerald-500/20 text-white">Request Withdrawal</button>
             </div>
         </div>
     </div>
 
     <!-- JavaScript Core Logic -->
     <script>
-        const CURRENT_APP_VERSION = "1.3"; 
-        const UPDATE_DOWNLOAD_URL = "https://bd-tournament-sm-cgfv.vercel.app"; 
-
-        window.addEventListener('online', () => {
-            document.getElementById('offlineBanner').classList.add('hidden');
-            showToast("Online", "Internet connection restored!", "success");
-        });
-        window.addEventListener('offline', () => {
-            document.getElementById('offlineBanner').classList.remove('hidden');
-        });
-
-        window.addEventListener('DOMContentLoaded', () => {
-            try {
-                let savedVersion = localStorage.getItem('sm_app_version');
-                if (!savedVersion) {
-                    localStorage.setItem('sm_app_version', CURRENT_APP_VERSION);
-                } else if (savedVersion !== CURRENT_APP_VERSION) {
-                    let btn = document.getElementById('updateDownloadBtn');
-                    if(btn) btn.href = UPDATE_DOWNLOAD_URL;
-                    document.getElementById('updateModalPopup').classList.remove('hidden');
-                }
-            } catch(e) { console.error("Update check error:", e); }
-        });
-
+        function closeApkModal() { document.getElementById('apkDownloadModal').classList.add('hidden'); }
         function sanitizeInput(str) {
             if (typeof str !== 'string') return '';
             return str.replace(/[&<>"']/g, function(m) {
@@ -315,7 +335,6 @@
         let generatedOTP = null;
         let forgotTargetPhone = null;
         let forgotGeneratedOTP = null;
-        let usedTrxIds = [];
         let registeredUsers = [];
 
         try { registeredUsers = JSON.parse(localStorage.getItem('sm_users') || '[]'); } catch(e) { registeredUsers = []; }
@@ -323,9 +342,11 @@
         let tournaments = [];
         try {
             tournaments = JSON.parse(localStorage.getItem('sm_tournaments') || JSON.stringify([
-                { id: 1, title: "CS 4v4 Full Map Clash", type: "CS", prize: "500 BDT", entryFee: 50, date: "2026-10-15", time: "08:30 PM", participants: [] },
-                { id: 2, title: "BR Solo Booyah Contest", type: "BR", prize: "300 BDT", entryFee: 30, date: "2026-10-15", time: "09:15 PM", participants: [] },
-                { id: 3, title: "Lone Wolf 1v1 Ultimate", type: "LONE", prize: "200 BDT", entryFee: 20, date: "2026-10-16", time: "10:00 PM", participants: [] }
+                { id: 1, title: "Solo Custom Booyah Challenge", type: "CUSTOM", teamType: "SOLO", prize: "400 BDT", entryFee: 30, totalSlots: 48, participants: [] },
+                { id: 2, title: "Squad Custom Battle Royale", type: "CUSTOM", teamType: "SQUAD", prize: "1000 BDT", entryFee: 100, totalSlots: 12, participants: [] },
+                { id: 3, title: "CS 4v4 Full Map Clash", type: "CS", teamType: "SQUAD", prize: "500 BDT", entryFee: 50, totalSlots: 2, participants: [] },
+                { id: 4, title: "BR Solo Booyah Contest", type: "BR", teamType: "SOLO", prize: "300 BDT", entryFee: 30, totalSlots: 48, participants: [] },
+                { id: 5, title: "Lone Wolf 1v1 Ultimate", type: "LONE", teamType: "SOLO", prize: "200 BDT", entryFee: 20, totalSlots: 2, participants: [] }
             ]));
         } catch(e) { tournaments = []; }
 
@@ -347,7 +368,7 @@
                 let winnerInfo = JSON.parse(localStorage.getItem('sm_latest_winner') || 'null');
                 if(winnerInfo) {
                     document.getElementById('winnerTeamName').innerText = winnerInfo.squad;
-                    document.getElementById('winnerDisplayBanner').innerHTML = `Congratulations to <b class="text-yellow-400 font-bold">${sanitizeInput(winnerInfo.squad)}</b> for winning the ${sanitizeInput(winnerInfo.matchTitle)}! 🔥`;
+                    document.getElementById('winnerDisplayBanner').innerHTML = `Congratulations to <b class="text-yellow-400 font-bold">${sanitizeInput(winnerInfo.squad)}</b> for winning! 🔥`;
                 }
             } catch(e) {}
         }
@@ -376,9 +397,36 @@
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
-        function switchToRegister() { closeModal('authModal'); openModal('registerModal'); }
+        function switchToRegister() { closeModal('authModal'); closeModal('forgotModal'); openModal('registerModal'); }
         function switchToLogin() { closeModal('registerModal'); closeModal('forgotModal'); openModal('authModal'); }
-        function openForgotModal() { closeModal('authModal'); openModal('forgotModal'); }
+        function openForgotModal() { closeModal('authModal'); closeModal('registerModal'); openModal('forgotModal'); }
+
+        function sendForgotOTP() {
+            let phone = sanitizeInput(document.getElementById('forgotPhone').value.trim());
+            let user = registeredUsers.find(u => u.phone === phone);
+            if (!user) { showToast("Not Found", "Phone number not registered!", "error"); return; }
+            forgotTargetPhone = phone;
+            forgotGeneratedOTP = (Math.floor(1000 + Math.random() * 9000)).toString();
+            document.getElementById('forgotStep1').classList.add('hidden');
+            document.getElementById('forgotStep2').classList.remove('hidden');
+            showToast("Recovery Code Sent!", `Code: ${forgotGeneratedOTP}`, "success");
+        }
+
+        function verifyAndResetPassword() {
+            let otp = sanitizeInput(document.getElementById('forgotOtpInput').value.trim());
+            let newPass = sanitizeInput(document.getElementById('newPass').value.trim());
+            if (otp !== forgotGeneratedOTP) { showToast("Error", "Invalid OTP Code!", "error"); return; }
+            if (!newPass) { showToast("Error", "Enter a new password!", "error"); return; }
+
+            let user = registeredUsers.find(u => u.phone === forgotTargetPhone);
+            if (user) {
+                user.pass = newPass;
+                localStorage.setItem('sm_users', JSON.stringify(registeredUsers));
+                showToast("Success", "Password reset successfully! Login now.", "success");
+                switchToLogin();
+            }
+        }
+
         function openSquadManageModal() {
             if(!currentUser) { showToast("Login Required", "Please login first!", "error"); openModal('authModal'); return; }
             openModal('squadManageModal');
@@ -436,7 +484,7 @@
                 document.getElementById('navWallet').innerText = "৳" + userBalance;
                 document.getElementById('modalBalance').innerText = "৳" + userBalance;
                 closeModal('authModal');
-                showToast("Welcome", `Welcome back ${currentUser} (${userUID})!`, "success");
+                showToast("Welcome", `Welcome back ${currentUser}!`, "success");
             } else { showToast("Error", "Invalid credentials!", "error"); }
         }
 
@@ -473,7 +521,7 @@
             }
             userChats.forEach(c => {
                 let bg = c.sender === 'user' ? 'bg-blue-600/30 text-right text-blue-200' : 'bg-emerald-600/30 text-emerald-200';
-                chatBox.innerHTML += `<div class="${bg} p-2 rounded-lg my-1"><p class="text-[10px] text-slate-400">${c.sender === 'user' ? 'You' : 'Admin'} (${c.time}):</p>${c.message}</div>`;
+                chatBox.innerHTML += `<div class="${bg} p-2 rounded-lg my-1"><p class="text-[10px] text-slate-400">${c.sender === 'user' ? 'You' : 'Admin'}:</p>${c.message}</div>`;
             });
             chatBox.scrollTop = chatBox.scrollHeight;
         }
@@ -496,6 +544,7 @@
             userBalance -= fee;
             localStorage.setItem('sm_user_balance', userBalance);
             document.getElementById('navWallet').innerText = "৳" + userBalance;
+            document.getElementById('modalBalance').innerText = "৳" + userBalance;
 
             if(!match.participants) match.participants = [];
             match.participants.push({ user: currentUser, uid: userUID, phone: userPhoneKey, squad, ffUid });
@@ -503,28 +552,42 @@
 
             closeModal('squadModal');
             showToast("Success", "Successfully joined match!", "success");
+            renderTournaments();
         }
 
         function requestDeposit() {
+            if(!currentUser) { showToast("Login Required", "Please login first!", "error"); openModal('authModal'); return; }
             let amt = Number(document.getElementById('depositAmount').value);
             let trx = sanitizeInput(document.getElementById('depositTrx').value.trim());
-            if(!amt || amt < 100 || !trx) { showToast("Error", "Minimum deposit is ৳100 and enter TrxID!", "error"); return; }
-            userBalance += amt;
-            localStorage.setItem('sm_user_balance', userBalance);
-            document.getElementById('navWallet').innerText = "৳" + userBalance;
-            showToast("Success", "Deposit added successfully!", "success");
+            if(!amt || amt < 100 || !trx) { showToast("Error", "Minimum deposit is ৳100 and enter valid TrxID!", "error"); return; }
+            
+            let deposits = JSON.parse(localStorage.getItem('sm_admin_deposits') || '[]');
+            deposits.push({ id: Date.now(), uid: userUID, name: currentUser, phone: userPhoneKey, amount: amt, trx: trx, status: 'Pending', time: new Date().toLocaleString() });
+            localStorage.setItem('sm_admin_deposits', JSON.stringify(deposits));
+
+            showToast("Success", "Deposit request sent to Admin successfully!", "success");
             closeModal('walletModal');
         }
 
         function requestWithdraw() {
+            if(!currentUser) { showToast("Login Required", "Please login first!", "error"); openModal('authModal'); return; }
+            let method = document.getElementById('withdrawMethod').value;
             let amt = Number(document.getElementById('withdrawAmount').value);
             let number = sanitizeInput(document.getElementById('withdrawNumber').value.trim());
-            if(!amt || amt < 100 || !number) { showToast("Error", "Minimum withdrawal is ৳100!", "error"); return; }
-            if(userBalance < amt) { showToast("Error", "Low balance!", "error"); return; }
+            
+            if(!amt || amt < 100 || !number) { showToast("Error", "Minimum withdrawal is ৳100 and enter your account number!", "error"); return; }
+            if(userBalance < amt) { showToast("Error", "Insufficient balance for withdrawal!", "error"); return; }
+            
             userBalance -= amt;
             localStorage.setItem('sm_user_balance', userBalance);
             document.getElementById('navWallet').innerText = "৳" + userBalance;
-            showToast("Success", "Withdrawal requested!", "success");
+            document.getElementById('modalBalance').innerText = "৳" + userBalance;
+
+            let withdraws = JSON.parse(localStorage.getItem('sm_admin_withdraws') || '[]');
+            withdraws.push({ id: Date.now(), uid: userUID, name: currentUser, phone: userPhoneKey, method: method, amount: amt, targetNumber: number, status: 'Pending', time: new Date().toLocaleString() });
+            localStorage.setItem('sm_admin_withdraws', JSON.stringify(withdraws));
+
+            showToast("Success", "Withdrawal request sent to Admin successfully!", "success");
             closeModal('walletModal');
         }
 
@@ -533,16 +596,31 @@
             list.innerHTML = "";
             tournaments.forEach(t => {
                 if(filter === 'ALL' || t.type === filter) {
+                    let joinedCount = t.participants ? t.participants.length : 0;
+                    let slotsLeft = (t.totalSlots || 48) - joinedCount;
+                    let teamModeText = t.teamType || 'SOLO';
+
                     list.innerHTML += `
-                        <div class="card-bg p-4 rounded-xl space-y-3">
+                        <div class="card-bg p-4 rounded-xl space-y-3 relative border border-slate-800 card-hover">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold">${sanitizeInput(t.type)}</span>
-                                    <h3 class="font-bold text-base mt-1">${sanitizeInput(t.title)}</h3>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold">${sanitizeInput(t.type)}</span>
+                                        <span class="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded font-bold">${sanitizeInput(teamModeText)}</span>
+                                    </div>
+                                    <h3 class="font-bold text-base mt-1 text-white">${sanitizeInput(t.title)}</h3>
                                 </div>
-                                <span class="text-emerald-400 font-bold text-sm">Prize: ${sanitizeInput(t.prize)}</span>
+                                <span class="text-emerald-400 font-extrabold text-sm">৳${sanitizeInput(t.prize)}</span>
                             </div>
-                            <button onclick="joinMatch(${t.id})" class="w-full bg-slate-800 hover:bg-blue-600 border border-slate-700 py-2 rounded-lg font-semibold text-sm">Join Match (৳${t.entryFee})</button>
+
+                            <div class="grid grid-cols-2 gap-2 text-xs bg-slate-900/80 p-2.5 rounded-lg border border-slate-800">
+                                <div><span class="text-slate-400">Entry Fee:</span> <b class="text-white">৳${t.entryFee}</b></div>
+                                <div><span class="text-slate-400">Available Slots:</span> <b class="text-emerald-400">${slotsLeft} Left</b></div>
+                            </div>
+
+                            <button onclick="joinMatch(${t.id})" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 py-2.5 rounded-lg font-bold text-sm text-white transition shadow-md shadow-blue-500/10">
+                                Join Match (৳${t.entryFee})
+                            </button>
                         </div>
                     `;
                 }
