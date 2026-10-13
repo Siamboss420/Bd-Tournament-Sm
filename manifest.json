@@ -1,0 +1,28 @@
+{
+  "name": "BD TOURNAMENT SM",
+  "short_name": "BD Tournament",
+  "description": "BD TOURNAMENT SM is a secure Free Fire esports platform for daily matches and tournaments.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0f19",
+  "theme_color": "#3b82f6",
+  "lang": "bn",
+  "dir": "ltr",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "./4354%20(1).png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./4354%20(1).png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
